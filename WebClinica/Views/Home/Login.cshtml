@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Login.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+
+        @if (TempData["msj"] != null)
+        {
+            <div class="alert alert-danger">Ocurrio un error. @TempData["msj"]</div>
+        }
+
+    <main class="d-flex justify-content-center align-items-center h-100">
+  <form action="/Home/ValidarUsuarioContrasenia" method="post" class="form-signin text-center">
+    <h1 class="h3 mb-3 fw-normal">Inicie Sesión</h1>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="inputUsuario" name="NickName" placeholder="Ingrese su usuario">
+      <label>Usuario</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="inputContrasenia" name="Contrasenia" placeholder="Ingrese su contraseña">
+      <label >Contraseña</label>
+    </div>
+    <button type="submit" class="w-100 btn btn-lg btn-primary mt-3">Ingresar</button>
+    <a href="/Home/Registrar" class="btn btn-link fw-light text-center">Registrar nuevo usuario</a>
+  </form>
+</main>
+    </div>
+</body>
+</html>

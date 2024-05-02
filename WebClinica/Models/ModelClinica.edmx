@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Generacion24Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MediosContacto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pacientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="Imagen" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PacientesContacto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PacienteId" Type="int" />
+          <Property Name="MedioContactoId" Type="int" />
+          <Property Name="Informacion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Paterno" Type="varchar" MaxLength="50" />
+          <Property Name="NickName" Type="varchar" MaxLength="50" />
+          <Property Name="Contrasenia" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Pacientes_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pacientes">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PacientesContacto_MediosContacto">
+          <End Role="MediosContacto" Type="Self.MediosContacto" Multiplicity="0..1" />
+          <End Role="PacientesContacto" Type="Self.PacientesContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediosContacto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PacientesContacto">
+              <PropertyRef Name="MedioContactoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PacientesContacto_Pacientes">
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="0..1" />
+          <End Role="PacientesContacto" Type="Self.PacientesContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pacientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PacientesContacto">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Generacion24ModelStoreContainer">
+          <EntitySet Name="MediosContacto" EntityType="Self.MediosContacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pacientes" EntityType="Self.Pacientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PacientesContacto" EntityType="Self.PacientesContacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Pacientes_Usuarios" Association="Self.FK_Pacientes_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Pacientes" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PacientesContacto_MediosContacto" Association="Self.FK_PacientesContacto_MediosContacto">
+            <End Role="MediosContacto" EntitySet="MediosContacto" />
+            <End Role="PacientesContacto" EntitySet="PacientesContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PacientesContacto_Pacientes" Association="Self.FK_PacientesContacto_Pacientes">
+            <End Role="Pacientes" EntitySet="Pacientes" />
+            <End Role="PacientesContacto" EntitySet="PacientesContacto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Generacion24Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MediosContacto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PacientesContacto" Relationship="Self.FK_PacientesContacto_MediosContacto" FromRole="MediosContacto" ToRole="PacientesContacto" />
+        </EntityType>
+        <EntityType Name="PacientesContacto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PacienteId" Type="Int32" />
+          <Property Name="MedioContactoId" Type="Int32" />
+          <Property Name="Informacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MediosContacto" Relationship="Self.FK_PacientesContacto_MediosContacto" FromRole="PacientesContacto" ToRole="MediosContacto" />
+          <NavigationProperty Name="Pacientes" Relationship="Generacion24Model.FK_PacientesContacto_Pacientes" FromRole="PacientesContacto" ToRole="Pacientes" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Paterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasenia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pacientes" Relationship="Generacion24Model.FK_Pacientes_Usuarios" FromRole="Usuarios" ToRole="Pacientes" />
+        </EntityType>
+        <Association Name="FK_PacientesContacto_MediosContacto">
+          <End Role="MediosContacto" Type="Self.MediosContacto" Multiplicity="0..1" />
+          <End Role="PacientesContacto" Type="Self.PacientesContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediosContacto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PacientesContacto">
+              <PropertyRef Name="MedioContactoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Generacion24Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MediosContacto" EntityType="Self.MediosContacto" />
+          <EntitySet Name="PacientesContacto" EntityType="Self.PacientesContacto" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_PacientesContacto_MediosContacto" Association="Self.FK_PacientesContacto_MediosContacto">
+            <End Role="MediosContacto" EntitySet="MediosContacto" />
+            <End Role="PacientesContacto" EntitySet="PacientesContacto" />
+          </AssociationSet>
+          <EntitySet Name="Pacientes" EntityType="Generacion24Model.Pacientes" />
+          <AssociationSet Name="FK_Pacientes_Usuarios" Association="Generacion24Model.FK_Pacientes_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Pacientes" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PacientesContacto_Pacientes" Association="Generacion24Model.FK_PacientesContacto_Pacientes">
+            <End Role="Pacientes" EntitySet="Pacientes" />
+            <End Role="PacientesContacto" EntitySet="PacientesContacto" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Pacientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="Imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Generacion24Model.FK_Pacientes_Usuarios" FromRole="Pacientes" ToRole="Usuarios" />
+          <NavigationProperty Name="PacientesContacto" Relationship="Generacion24Model.FK_PacientesContacto_Pacientes" FromRole="Pacientes" ToRole="PacientesContacto" />
+        </EntityType>
+        <Association Name="FK_Pacientes_Usuarios">
+          <End Type="Generacion24Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="Generacion24Model.Pacientes" Role="Pacientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pacientes">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PacientesContacto_Pacientes">
+          <End Type="Generacion24Model.Pacientes" Role="Pacientes" Multiplicity="0..1" />
+          <End Type="Generacion24Model.PacientesContacto" Role="PacientesContacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pacientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PacientesContacto">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Generacion24ModelStoreContainer" CdmEntityContainer="Generacion24Entities">
+          <EntitySetMapping Name="MediosContacto">
+            <EntityTypeMapping TypeName="Generacion24Model.MediosContacto">
+              <MappingFragment StoreEntitySet="MediosContacto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PacientesContacto">
+            <EntityTypeMapping TypeName="Generacion24Model.PacientesContacto">
+              <MappingFragment StoreEntitySet="PacientesContacto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="MedioContactoId" ColumnName="MedioContactoId" />
+                <ScalarProperty Name="Informacion" ColumnName="Informacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Generacion24Model.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Paterno" ColumnName="Paterno" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pacientes">
+            <EntityTypeMapping TypeName="Generacion24Model.Pacientes">
+              <MappingFragment StoreEntitySet="Pacientes">
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

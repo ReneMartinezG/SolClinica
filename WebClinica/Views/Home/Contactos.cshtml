@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebClinica.Models.PacientesContacto>
+
+@{
+    ViewBag.Title = "Contactos";
+}
+
+@if (Model.Count() == 0)
+{
+
+
+    <h2>El paciente no tiene contactos</h2>
+}
+else
+{
+    <h2>Nombre del paciente  @Model.First().Pacientes.Nombre</h2>
+
+}
+
+<hr />
+
+<form>
+    <table class="table" style="width:30%;">
+        <tr>
+            <td>Tipo de Contacto</td>
+            <td>@Html.DropDownList("MedioContactoId",null, "Seleccionar",new {@class="form-control"})</td>
+        </tr>
+        <tr>
+            <td>Informacion</td>
+            <td>
+                <input type="text" name="Informacion" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" name="PacienteId" value="@TempData["idPaciente"]" />
+            </td>
+            <td>
+                <input type="submit" value="Agregar" name="btn" class="btn btn-success" formaction="/Home/Agregarcontacto" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.MediosContacto.Tipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Informacion)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediosContacto.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Informacion)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteContacto", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

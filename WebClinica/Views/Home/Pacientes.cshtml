@@ -1,0 +1,43 @@
+﻿@using WebClinica.Models.Entidades
+@model ClienteconCantactos
+
+@{
+    ViewBag.Title = "Pacientes";
+}
+
+<h2>Pacientes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    @foreach (var item in Model.listaPacientes)
+    {
+
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="~/Images/@item.Imagen" class="card-img-top" alt="" style="width:275px; height:275px;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Nombre</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var contacto in Model.listaPacientesContacto.Where(x=> x.PacienteId == item.Id))
+                    {
+                        <li class="list-group-item"><strong>@contacto.MediosContacto.Tipo</strong> @contacto.Informacion</li>
+                    }
+                </ul>
+                <div class="card-body">
+                    <a href="/Home/Editar/@item.Id" class="card-link">Editar</a>
+                    <a href="/Home/Contactos/@item.Id" class="card-link">Contactos</a>
+                    <a href="/Home/DeletePaciente/@item.Id" class="card-link">Borrar</a>
+                </div>
+            </div>
+        </div>
+            }
+       
+    </div>
